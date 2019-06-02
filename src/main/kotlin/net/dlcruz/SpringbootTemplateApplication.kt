@@ -1,4 +1,4 @@
-package net.dlcruz.template
+package net.dlcruz
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
