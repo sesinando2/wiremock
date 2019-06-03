@@ -12,4 +12,6 @@ data class PersistentSample(
     var data: String
 )
 
-fun PersistentSample.toSample() = this.let { SampleResponse(id, data) }
+fun PersistentSample.toDto() = this.let { SampleResponse(id, data) }
+
+fun PersistentSample.updateWith(sample: Sample) = this.apply { data = sample.data }

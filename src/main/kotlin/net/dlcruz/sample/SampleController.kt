@@ -11,13 +11,17 @@ class SampleController(private val sampleService: SampleService) {
 
     @PostMapping
     fun post(@Valid @RequestBody sample: Sample) = sampleService
-        .newData(sample.data)
-        .map(PersistentSample::toSample)
+        .create(sample)
         .map { ResponseEntity(it, HttpStatus.CREATED) }
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: Long) = sampleService
         .get(id)
-        .map(PersistentSample::toSample)
         .map  { ResponseEntity(it, HttpStatus.OK) }
+
+    @PutMapping("/{id}")
+    fun put(@PathVariable id: Long,
+            @Valid @RequestBody sample: Sample) = sampleService
+        .update(id, sample)
+        .map { ResponseEntity(it, HttpStatus.OK) }
 }

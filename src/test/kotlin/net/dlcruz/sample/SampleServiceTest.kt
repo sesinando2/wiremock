@@ -2,11 +2,11 @@ package net.dlcruz.sample
 
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.slot
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import reactor.test.StepVerifier
-import java.util.*
 
 class SampleServiceTest {
 
@@ -21,17 +21,23 @@ class SampleServiceTest {
 
     @Test
     fun `should create new data`() {
-        val sampleData = PersistentSample(0, "test data")
-        val expectedResponse = PersistentSample(1, sampleData.data)
-        every { repository.save(sampleData) } returns expectedResponse
+        val sample = Sample("test data")
+        val generatedId = 1L
+        val slot = slot<PersistentSample>()
 
-        val publisher = sampleService.newData(sampleData.data)
+        every { repository.save(capture(slot)) } answers { PersistentSample(generatedId, slot.captured.data) }
 
-        StepVerifier.create(publisher).expectNext(expectedResponse).expectComplete().verify()
-        verify(exactly = 1) { repository.save(sampleData) }
+        val publisher = sampleService.create(sample)
+
+        StepVerifier.create(publisher)
+            .expectNextMatches { it.id == generatedId && it.data == sample.data }
+            .expectComplete()
+            .verify()
+
+        assertThat(slot.captured).isEqualTo(PersistentSample(0, sample.data))
     }
 
-    @Test
+    /*@Test
     fun `should be able to get added data`() {
         val sampleData = PersistentSample(0, "test data")
         val expectedResponse = PersistentSample(1, sampleData.data)
@@ -51,5 +57,5 @@ class SampleServiceTest {
         StepVerifier.create(publisher).expectNext(Unit).expectComplete().verify()
 
         verify(exactly = 1) { repository.deleteById(1) }
-    }
+    }*/
 }
