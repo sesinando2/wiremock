@@ -53,19 +53,20 @@ class TestSampleController(@Autowired private val client: WebTestClient) {
 
     @Test
     fun `test put`() {
+        val existingData = PersistentSample(1, "test data")
         val sample = Sample("updated data")
-        val existingId = 1L
         val slot = slot<PersistentSample>()
 
-        every { sampleRepository.save(capture(slot)) } answers { PersistentSample(existingId, slot.captured.data) }
+        every { sampleRepository.findById(existingData.id) } returns Optional.of(existingData)
+        every { sampleRepository.save(capture(slot)) } answers { PersistentSample(existingData.id, slot.captured.data) }
 
-        client.put().uri("/sample/{id}", existingId)
+        client.put().uri("/sample/{id}", existingData.id)
             .body(fromObject(sample))
             .exchange()
             .expectStatus().isOk
             .expectHeader().contentType(APPLICATION_JSON_UTF8)
             .expectBody()
-            .jsonPath("$.id").isEqualTo(existingId)
+            .jsonPath("$.id").isEqualTo(existingData.id)
             .jsonPath("$.data").isEqualTo(sample.data)
     }
 }

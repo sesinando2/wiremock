@@ -2,11 +2,11 @@ package net.dlcruz.sample
 
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.slot
-import org.assertj.core.api.Assertions.assertThat
+import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import reactor.test.StepVerifier
+import java.util.*
 
 class SampleServiceTest {
 
@@ -22,31 +22,33 @@ class SampleServiceTest {
     @Test
     fun `should create new data`() {
         val sample = Sample("test data")
-        val generatedId = 1L
-        val slot = slot<PersistentSample>()
+        val createdData = PersistentSample(1, sample.data)
 
-        every { repository.save(capture(slot)) } answers { PersistentSample(generatedId, slot.captured.data) }
+        every { repository.save(sample.toData()) } returns createdData
 
         val publisher = sampleService.create(sample)
 
         StepVerifier.create(publisher)
-            .expectNextMatches { it.id == generatedId && it.data == sample.data }
+            .expectNextMatches(createdData::matches)
             .expectComplete()
             .verify()
 
-        assertThat(slot.captured).isEqualTo(PersistentSample(0, sample.data))
+        verify (exactly = 1) { repository.save(sample.toData()) }
     }
 
-    /*@Test
+    @Test
     fun `should be able to get added data`() {
-        val sampleData = PersistentSample(0, "test data")
-        val expectedResponse = PersistentSample(1, sampleData.data)
-        every { repository.findById(1) } returns Optional.of(expectedResponse)
+        val existingData = PersistentSample(1, "test data")
+        every { repository.findById(existingData.id) } returns Optional.of(existingData)
 
-        val publisher = sampleService.get(1)
+        val publisher = sampleService.get(existingData.id)
 
-        StepVerifier.create(publisher).expectNext(expectedResponse).expectComplete().verify()
-        verify(exactly = 1) { repository.findById(1) }
+        StepVerifier.create(publisher)
+            .expectNextMatches(existingData::matches)
+            .expectComplete()
+            .verify()
+
+        verify (exactly = 1) { repository.findById(existingData.id) }
     }
 
     @Test
@@ -57,5 +59,7 @@ class SampleServiceTest {
         StepVerifier.create(publisher).expectNext(Unit).expectComplete().verify()
 
         verify(exactly = 1) { repository.deleteById(1) }
-    }*/
+    }
 }
+
+private fun PersistentSample.matches(sample: SampleResponse) = this.id == sample.id && this.data == sample.data
