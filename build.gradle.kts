@@ -22,6 +22,7 @@ plugins {
     kotlin("plugin.spring") version "1.2.71"
 }
 
+/* Start Liquibase Config */
 val propertiesFile = File("$projectDir/src/main/resources/application.yml").inputStream()
 val applicationProperties: Map<String, Any> = Yaml().load(propertiesFile) ?: throw IllegalArgumentException()
 val springProperties = applicationProperties["spring"] as Map<String, Any>
@@ -39,13 +40,20 @@ configure<LiquibaseExtension> {
     logLevel = "debug"
     fileExtension = "yml"
 }
+/* End Liquibase Config */
 
-group = "net.dlcruz"
-version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 val developmentOnly: Configuration by configurations.creating {
     extendsFrom(configurations.implementation.get())
+}
+
+val functionalTestImplementation: Configuration by configurations.creating {
+    extendsFrom(configurations.testImplementation.get())
+}
+
+val functionTestRuntimeOnly: Configuration by configurations.creating {
+    extendsFrom(configurations.testRuntimeOnly.get())
 }
 
 val liquibase = configurations.maybeCreate("liquibase")
@@ -83,6 +91,23 @@ dependencies {
 
     liquibase(project.sourceSets.getByName("main").runtimeClasspath)
 }
+
+sourceSets {
+    create("functionalTest") {
+        compileClasspath += sourceSets.main.get().output
+        compileClasspath += sourceSets.test.get().output
+
+        runtimeClasspath += sourceSets.main.get().output
+        runtimeClasspath += sourceSets.test.get().output
+        runtimeClasspath += functionTestRuntimeOnly
+    }
+}
+
+val functionalTest = task<Test>("functionalTest") {
+    testClassesDirs = sourceSets["functionalTest"].output.classesDirs
+    classpath = sourceSets["functionalTest"].runtimeClasspath
+}
+
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
