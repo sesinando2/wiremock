@@ -3,6 +3,7 @@ package net.dlcruz.sample
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.slot
+import net.dlcruz.TestConfiguration
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
@@ -13,8 +14,8 @@ import org.springframework.web.reactive.function.BodyInserters.fromObject
 import java.util.*
 
 @WebFluxTest
-@Import(SampleConfiguration::class)
-class TestSampleController(@Autowired private val client: WebTestClient) {
+@Import(TestConfiguration::class, SampleConfiguration::class)
+class SampleControllerTest(@Autowired private val client: WebTestClient) {
 
     @MockkBean private lateinit var sampleRepository: SampleRepository
 

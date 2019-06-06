@@ -1,5 +1,6 @@
 package net.dlcruz
 
+import net.dlcruz.logging.LoggerDelegate
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -19,7 +20,7 @@ class SpringbootTemplateApplication(
 		private val gitProperties: GitProperties
 ) {
 
-	private val log = LoggerFactory.getLogger(SpringbootTemplateApplication::class.java)
+	private val log by LoggerDelegate()
 
 	@EventListener(ApplicationReadyEvent::class)
 	fun startup() {
