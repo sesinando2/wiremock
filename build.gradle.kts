@@ -20,6 +20,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.7.RELEASE"
     kotlin("jvm") version "1.2.71"
     kotlin("plugin.spring") version "1.2.71"
+    id("com.gorylenko.gradle-git-properties") version "1.5.1"
 }
 
 /* Start Liquibase Config */
@@ -74,6 +75,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.liquibase:liquibase-core")
     implementation("org.springframework.retry:spring-retry")
+    implementation("org.apache.commons:commons-lang3:3.0")
+
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
@@ -118,4 +121,9 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+
+springBoot {
+    buildInfo()
 }
