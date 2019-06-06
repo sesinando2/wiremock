@@ -77,7 +77,6 @@ dependencies {
     implementation("org.springframework.retry:spring-retry")
     implementation("org.apache.commons:commons-lang3:3.0")
 
-
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     runtimeOnly("mysql:mysql-connector-java")
@@ -109,6 +108,7 @@ sourceSets {
 val functionalTest = task<Test>("functionalTest") {
     testClassesDirs = sourceSets["functionalTest"].output.classesDirs
     classpath = sourceSets["functionalTest"].runtimeClasspath
+    project.properties["targetUrl"]?.apply { systemProperty("targetUrl", this) }
 }
 
 
@@ -122,7 +122,6 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
 
 springBoot {
     buildInfo()

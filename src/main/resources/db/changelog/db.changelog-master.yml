@@ -1,3 +1,4 @@
 databaseChangeLog:
-  - file: db/changelog/migrations/190602-create-sample.yml
+  - include:
+      file: db/changelog/migrations/190602-create-sample.yml
 
