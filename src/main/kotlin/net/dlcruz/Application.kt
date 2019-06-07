@@ -13,7 +13,7 @@ import java.net.InetAddress
 import java.util.* // ktlint-disable no-wildcard-imports
 
 @SpringBootApplication
-class SpringbootTemplateApplication(
+class Application(
     private val environment: Environment,
     private val buildProperties: BuildProperties,
     private val gitProperties: GitProperties
@@ -56,5 +56,5 @@ class SpringbootTemplateApplication(
 }
 
 fun main(args: Array<String>) {
-    runApplication<SpringbootTemplateApplication>(*args)
+    runApplication<Application>(*args)
 }
