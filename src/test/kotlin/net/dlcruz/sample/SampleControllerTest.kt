@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType.APPLICATION_JSON_UTF8
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.web.reactive.function.BodyInserters.fromObject
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
 @WebFluxTest
 @Import(TestConfiguration::class, SampleConfiguration::class)

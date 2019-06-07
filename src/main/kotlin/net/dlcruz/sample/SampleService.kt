@@ -3,7 +3,7 @@ package net.dlcruz.sample
 import net.dlcruz.functional.merge
 import net.dlcruz.logging.LoggerDelegate
 import reactor.core.publisher.toMono
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
 open class SampleService(private val repository: SampleRepository) {
 

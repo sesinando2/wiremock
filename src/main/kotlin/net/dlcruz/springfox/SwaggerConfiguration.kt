@@ -11,8 +11,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import springfox.documentation.builders.PathSelectors
 import springfox.documentation.builders.RequestHandlerSelectors
-import springfox.documentation.schema.AlternateTypeRules
-import springfox.documentation.schema.AlternateTypeRules.*
+import springfox.documentation.schema.AlternateTypeRules.* // ktlint-disable no-wildcard-imports
 import springfox.documentation.schema.WildcardType
 import springfox.documentation.service.ApiInfo
 import springfox.documentation.service.ApiInfo.DEFAULT_CONTACT
@@ -24,8 +23,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 @Configuration
 @EnableSwagger2
 class SwaggerConfiguration(
-        private val resolver: TypeResolver,
-        private val buildProperties: BuildProperties) {
+    private val resolver: TypeResolver,
+    private val buildProperties: BuildProperties
+) {
 
     @Bean
     fun api() = Docket(DocumentationType.SWAGGER_2)

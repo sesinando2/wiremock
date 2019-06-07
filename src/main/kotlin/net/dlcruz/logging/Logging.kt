@@ -13,6 +13,6 @@ fun <T : Any> getClassForLogging(javaClass: Class<T>): Class<*> {
 }
 
 class LoggerDelegate<in R : Any> : ReadOnlyProperty<R, Logger> {
-    override fun getValue(thisRef: R, property: KProperty<*>)
-        = getLogger(getClassForLogging(thisRef.javaClass))
+    override fun getValue(thisRef: R, property: KProperty<*>) =
+        getLogger(getClassForLogging(thisRef.javaClass))
 }

@@ -41,15 +41,17 @@ configure<LiquibaseExtension> {
     logLevel = "debug"
     fileExtension = "yml"
 }
+
+val liquibase = configurations.maybeCreate("liquibase")
 /* End Liquibase Config */
+
+var ktlint = configurations.maybeCreate("ktlint")
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 val developmentOnly: Configuration by configurations.creating {
     extendsFrom(configurations.implementation.get())
 }
-
-val liquibase = configurations.maybeCreate("liquibase")
 
 repositories {
     mavenCentral()
@@ -86,6 +88,8 @@ dependencies {
     testImplementation("com.h2database:h2:1.4.199")
 
     liquibase(project.sourceSets.getByName("main").runtimeClasspath)
+
+    ktlint("com.github.shyiko:ktlint:0.31.0")
 }
 
 sourceSets {
@@ -115,6 +119,24 @@ val functionalTest = task<Test>("functionalTest") {
     project.properties["targetUrl"]?.apply { systemProperty("targetUrl", this) }
 }
 
+val ktlintTask = task<JavaExec>("ktlint") {
+    group = "verification"
+    description = "Check Kotlin code style."
+    main = "com.github.shyiko.ktlint.Main"
+    classpath = ktlint
+    args("src/**/*.kt")
+    // to generate report in checkstyle format prepend following args:
+    // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
+    // see https://github.com/shyiko/ktlint#usage for more
+}
+
+val ktlintFormat = task<JavaExec>("ktlintFormat") {
+    group = "formatting"
+    description = "Fix Kotlin code style deviations."
+    main = "com.github.shyiko.ktlint.Main"
+    classpath = ktlint
+    args("-F", "src/**/*.kt")
+}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
@@ -130,3 +152,5 @@ tasks.withType<Test> {
 springBoot {
     buildInfo()
 }
+
+tasks.check { dependsOn(ktlintTask) }

@@ -9,8 +9,8 @@ import org.springframework.web.reactive.function.BodyInserters
 
 @FunctionalTest
 class SampleControllerFunctionalTest(
-        @Autowired private val webTestClient: WebTestClient,
-        @Autowired private val fixtureHelperFactory: FixtureHelperFactory
+    @Autowired private val webTestClient: WebTestClient,
+    @Autowired private val fixtureHelperFactory: FixtureHelperFactory
 ) {
 
     @Test

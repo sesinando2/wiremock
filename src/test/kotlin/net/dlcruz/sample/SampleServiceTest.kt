@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import reactor.test.StepVerifier
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
 class SampleServiceTest {
 
@@ -33,7 +33,7 @@ class SampleServiceTest {
             .expectComplete()
             .verify()
 
-        verify (exactly = 1) { repository.save(sample.toData()) }
+        verify(exactly = 1) { repository.save(sample.toData()) }
     }
 
     @Test
@@ -48,7 +48,7 @@ class SampleServiceTest {
             .expectComplete()
             .verify()
 
-        verify (exactly = 1) { repository.findById(existingData.id) }
+        verify(exactly = 1) { repository.findById(existingData.id) }
     }
 
     @Test

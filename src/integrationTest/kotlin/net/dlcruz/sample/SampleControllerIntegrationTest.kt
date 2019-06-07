@@ -7,8 +7,8 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SampleControllerIntegrationTest(
-        @Autowired private val client: WebTestClient,
-        @Autowired private val sampleRepository: SampleRepository
+    @Autowired private val client: WebTestClient,
+    @Autowired private val sampleRepository: SampleRepository
 ) {
 
     @Test

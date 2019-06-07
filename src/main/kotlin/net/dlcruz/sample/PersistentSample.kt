@@ -1,6 +1,6 @@
 package net.dlcruz.sample
 
-import javax.persistence.*
+import javax.persistence.* // ktlint-disable no-wildcard-imports
 
 @Entity
 data class PersistentSample(
@@ -11,7 +11,7 @@ data class PersistentSample(
     @Column(nullable = false)
     var data: String
 ) {
-    constructor(data: String): this(0, data)
+    constructor(data: String) : this(0, data)
 }
 
 fun PersistentSample.toDto() = this.let { SampleResponse(id, data) }

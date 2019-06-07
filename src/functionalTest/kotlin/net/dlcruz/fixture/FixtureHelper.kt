@@ -3,7 +3,7 @@ package net.dlcruz.fixture
 import net.dlcruz.sample.SampleResponse
 import reactor.core.publisher.Mono
 import reactor.core.publisher.toMono
-import reactor.util.function.*
+import reactor.util.function.* // ktlint-disable no-wildcard-imports
 
 class FixtureHelper(
     private val sampleHelper: SampleHelper

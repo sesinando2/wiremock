@@ -4,7 +4,7 @@ import org.springframework.boot.info.BuildProperties
 import org.springframework.boot.info.GitProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import java.util.*
+import java.util.* // ktlint-disable no-wildcard-imports
 
 @Configuration
 class TestConfiguration {
