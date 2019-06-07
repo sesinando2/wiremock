@@ -1,4 +1,4 @@
-package net.dlcruz
+package net.dlcruz.config
 
 import org.springframework.boot.info.BuildProperties
 import org.springframework.boot.info.GitProperties

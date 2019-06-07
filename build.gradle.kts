@@ -49,14 +49,6 @@ val developmentOnly: Configuration by configurations.creating {
     extendsFrom(configurations.implementation.get())
 }
 
-val functionalTestImplementation: Configuration by configurations.creating {
-    extendsFrom(configurations.testImplementation.get())
-}
-
-val functionTestRuntimeOnly: Configuration by configurations.creating {
-    extendsFrom(configurations.testRuntimeOnly.get())
-}
-
 val liquibase = configurations.maybeCreate("liquibase")
 
 repositories {
@@ -95,14 +87,24 @@ dependencies {
 }
 
 sourceSets {
+    create("integrationTest") {
+        compileClasspath += sourceSets.main.get().output
+        compileClasspath += sourceSets.main.get().compileClasspath
+        compileClasspath += sourceSets.test.get().compileClasspath
+        runtimeClasspath += sourceSets.test.get().runtimeClasspath
+    }
+
     create("functionalTest") {
         compileClasspath += sourceSets.main.get().output
-        compileClasspath += sourceSets.test.get().output
-
-        runtimeClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.test.get().output
-        runtimeClasspath += functionTestRuntimeOnly
+        compileClasspath += sourceSets.main.get().compileClasspath
+        compileClasspath += sourceSets.test.get().compileClasspath
+        runtimeClasspath += sourceSets.test.get().runtimeClasspath
     }
+}
+
+val integrationTest = task<Test>("integrationTest") {
+    testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+    classpath = sourceSets["integrationTest"].runtimeClasspath
 }
 
 val functionalTest = task<Test>("functionalTest") {

@@ -1,6 +1,6 @@
 package net.dlcruz.sample
 
-import net.dlcruz.TestConfiguration
+import net.dlcruz.config.TestConfiguration
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test

@@ -10,7 +10,9 @@ data class PersistentSample(
 
     @Column(nullable = false)
     var data: String
-)
+) {
+    constructor(data: String): this(0, data)
+}
 
 fun PersistentSample.toDto() = this.let { SampleResponse(id, data) }
 
