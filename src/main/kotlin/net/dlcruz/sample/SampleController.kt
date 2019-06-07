@@ -1,10 +1,12 @@
 package net.dlcruz.sample
 
+import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
+@Api(tags = ["sample"], description = "Sample Controller")
 @RestController
 @RequestMapping("/sample")
 class SampleController(private val sampleService: SampleService) {

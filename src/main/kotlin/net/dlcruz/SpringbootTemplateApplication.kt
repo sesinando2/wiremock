@@ -35,7 +35,7 @@ class SpringbootTemplateApplication(
 				"--------------------------------------------------------------------------------------\n" +
 				"    Application %2\$s v%8\$s (%9\$s) is running! Access URLs:\n" +
 				"    Local               : %1\$s://localhost:%3\$s%5\$s\n" +
-				"    ApiDoc              : %1\$s://localhost:%3\$s%5\$s/api-doc/index.html \n" +
+				"    ApiDoc              : %1\$s://localhost:%3\$s%5\$s/swagger-ui.html \n" +
 				"    Management          : %1\$s://localhost:%4\$s%5\$s/actuator\n" +
 				"    Available Resources : %1\$s://localhost:%4\$s%5\$s/actuator/mappings\n" +
 				"    External            : %1\$s://%6\$s:%4\$s%5\$s\n" +

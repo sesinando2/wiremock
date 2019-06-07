@@ -68,6 +68,8 @@ dependencies {
     implementation("org.liquibase:liquibase-core")
     implementation("org.springframework.retry:spring-retry")
     implementation("org.apache.commons:commons-lang3:3.0")
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+    implementation("io.springfox:springfox-swagger-ui:2.9.2")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
