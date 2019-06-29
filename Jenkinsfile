@@ -56,7 +56,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        container('gradle') {
+        container('gradle5') {
           dir('./charts/springboot-template') {
             sh "jx step changelog --version v\$(cat ../../VERSION)"
 
