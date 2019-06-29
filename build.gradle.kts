@@ -22,24 +22,6 @@ plugins {
     kotlin("plugin.spring") version "1.2.71"
     kotlin("kapt") version "1.2.71"
     id("com.gorylenko.gradle-git-properties") version "1.5.1"
-    `maven-publish`
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("bootJava") {
-            artifact(tasks.getByName("bootJar"))
-        }
-    }
-    repositories {
-        maven {
-            url = uri("http://mini:8081/nexus/content/repositories/snapshots")
-            credentials {
-                username = "deployment"
-                password = "deployment123"
-            }
-        }
-    }
 }
 
 /* Start Liquibase Config */
@@ -74,9 +56,6 @@ val developmentOnly: Configuration by configurations.creating {
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("http://mini:8081/nexus/content/repositories/snapshots")
-    }
 }
 
 dependencies {
