@@ -4,7 +4,7 @@ pipeline {
   }
   environment {
     ORG = 'sesinando2'
-    APP_NAME = 'springboot-template-jx'
+    APP_NAME = 'springboot-template'
     CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
     DOCKER_REGISTRY_ORG = 'sesinando2'
   }
@@ -57,7 +57,7 @@ pipeline {
       }
       steps {
         container('gradle') {
-          dir('./charts/springboot-template-jx') {
+          dir('./charts/springboot-template') {
             sh "jx step changelog --version v\$(cat ../../VERSION)"
 
             // release the helm chart
