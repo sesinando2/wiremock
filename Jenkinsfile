@@ -4,7 +4,7 @@ pipeline {
   }
   environment {
     ORG = 'sesinando2'
-    APP_NAME = 'springboot-template'
+    APP_NAME = 'springboot-template-jx'
     CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
     DOCKER_REGISTRY_ORG = 'sesinando2'
   }
@@ -20,7 +20,7 @@ pipeline {
       }
       steps {
         container('gradle5') {
-          sh "gradle clean build -Pversion=\$(cat VERSION)"
+          sh "gradle clean build"
           sh "export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
           dir('./charts/preview') {
@@ -45,7 +45,7 @@ pipeline {
           // so we can retrieve the version in later steps
           sh "echo \$(jx-release-version) > VERSION"
           sh "jx step tag --version \$(cat VERSION)"
-          sh "gradle clean build -Pversion=\$(cat VERSION)"
+          sh "gradle clean build"
           sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
         }
@@ -57,7 +57,7 @@ pipeline {
       }
       steps {
         container('gradle5') {
-          dir('./charts/springboot-template') {
+          dir('./charts/springboot-template-jx') {
             sh "jx step changelog --version v\$(cat ../../VERSION)"
 
             // release the helm chart
