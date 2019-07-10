@@ -21,7 +21,7 @@ plugins {
     kotlin("jvm") version "1.2.71"
     kotlin("plugin.spring") version "1.2.71"
     kotlin("kapt") version "1.2.71"
-    id("com.gorylenko.gradle-git-properties") version "1.5.1"
+    id("com.gorylenko.gradle-git-properties") version "2.0.0"
 }
 
 /* Start Liquibase Config */
