@@ -3,6 +3,15 @@
 ## Import to Jenkins X
 - `jx import`
 
+## DevPod
+### VS Code
+- `jx create devpod`
+### Desktop IDEA
+- `jx sync`
+- `jx create devpod --reuse --sync`
+### Shell
+- `jx rsh -d`
+
 ## How to GitOps/ChatOps
 - `jx create issue -t 'Do something cool'`
 - `git checkout -b feature/1-Do-something-cool`
