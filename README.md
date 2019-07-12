@@ -6,7 +6,7 @@
 ## DevPod
 ### VS Code
 - `jx create devpod`
-### Desktop IDEA
+### Desktop IDE
 - `jx sync`
 - `jx create devpod --reuse --sync`
 ### Shell
