@@ -7,7 +7,7 @@ import org.springframework.web.reactive.config.WebFluxConfigurer
 
 @Configuration
 @EnableWebFlux
-class WebFluxConfiguration: WebFluxConfigurer {
+class WebFluxConfiguration : WebFluxConfigurer {
 
     override fun configureHttpMessageCodecs(configurer: ServerCodecConfigurer) {
         configurer.defaultCodecs().enableLoggingRequestDetails(true)
