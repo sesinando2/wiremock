@@ -14,7 +14,7 @@ env:
 knativeDeploy: false
 
 service:
-  name: springboot-template
+  name: wiremock
   type: ClusterIP
   externalPort: 80
   internalPort: 8080

@@ -4,7 +4,7 @@ pipeline {
   }
   environment {
     ORG = 'sesinando2'
-    APP_NAME = 'springboot-template'
+    APP_NAME = 'wiremock'
     CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
     DOCKER_REGISTRY_ORG = 'sesinando2'
   }
@@ -57,7 +57,7 @@ pipeline {
       }
       steps {
         container('gradle') {
-          dir('./charts/springboot-template') {
+          dir('./charts/wiremock') {
             sh "jx step changelog --version v\$(cat ../../VERSION)"
 
             // release the helm chart

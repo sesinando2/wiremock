@@ -1,4 +1,4 @@
-# springboot-template
+# wiremock
 
 ## Import to Jenkins X
 - `jx import`
