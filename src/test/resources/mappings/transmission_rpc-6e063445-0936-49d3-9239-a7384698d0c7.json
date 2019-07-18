@@ -1,0 +1,25 @@
+{
+  "id" : "6e063445-0936-49d3-9239-a7384698d0c7",
+  "name" : "transmission_rpc",
+  "request" : {
+    "url" : "/transmission/rpc",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalToJson" : "{\n    \"method\": \"torrent-add\",\n    \"arguments\": {\n        \"filename\": \"magnet:?xt=urn:btih:JZHO2UFYGJZOFIQD5VECE7S5OAIZVVGY&tr=http://nyaa.tracker.wf:7777/announce&tr=udp://tracker.coppersurfer.tk:6969/announce&tr=udp://tracker.internetwarriors.net:1337/announce&tr=udp://tracker.leechersparadise.org:6969/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://open.stealth.si:80/announce&tr=udp://p4p.arenabg.com:1337/announce&tr=udp://mgtracker.org:6969/announce&tr=udp://tracker.tiny-vps.com:6969/announce&tr=udp://peerfect.org:6969/announce&tr=http://share.camoe.cn:8080/announce&tr=http://t.nyaatracker.com:80/announce&tr=https://open.kickasstracker.com:443/announce\"\n    }\n}",
+      "ignoreArrayOrder" : true,
+      "ignoreExtraElements" : true
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"arguments\":{\"torrent-duplicate\":{\"hashString\":\"4e4eed50b83272e2a203ed48227e5d70119ad4d8\",\"id\":12,\"name\":\"[HorribleSubs] One Punch Man S2 - 01 [720p].mkv\"}},\"result\":\"success\"}\n",
+    "headers" : {
+      "Server" : "Transmission",
+      "Content-Type" : "application/json; charset=UTF-8",
+      "Date" : "Mon, 15 Jul 2019 12:55:51 GMT"
+    }
+  },
+  "uuid" : "6e063445-0936-49d3-9239-a7384698d0c7",
+  "persistent" : true,
+  "insertionIndex" : 1
+}

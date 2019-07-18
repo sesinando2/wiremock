@@ -1,7 +1,4 @@
-import net.dlcruz.gradle.liquibase.LiquibaseExtension
-import net.dlcruz.gradle.liquibase.LiquibasePlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.yaml.snakeyaml.Yaml
 
 buildscript {
     repositories {
@@ -24,28 +21,6 @@ plugins {
     id("com.gorylenko.gradle-git-properties") version "2.0.0"
 }
 
-/* Start Liquibase Config */
-val propertiesFile = File("$projectDir/src/main/resources/application.yml").inputStream()
-val applicationProperties: Map<String, Any> = Yaml().load(propertiesFile) ?: throw IllegalArgumentException()
-val springProperties = applicationProperties["spring"] as Map<String, Any>
-val datasource = springProperties["datasource"] as Map<String, Any>
-
-apply<LiquibasePlugin>()
-
-configure<LiquibaseExtension> {
-    url = "${datasource["url"]}"
-    driver = "${datasource["driver-class-name"]}"
-    username = "${datasource["username"]}"
-    password = datasource["password"]?.toString()
-    hibernateDialect = "org.hibernate.dialect.MySQL5Dialect"
-    jpaPackage = "net.dlcruz"
-    logLevel = "debug"
-    fileExtension = "yml"
-}
-
-val liquibase = configurations.maybeCreate("liquibase")
-/* End Liquibase Config */
-
 var ktlint = configurations.maybeCreate("ktlint")
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
@@ -60,19 +35,10 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-aop")
-    implementation("org.springframework.boot:spring-boot-starter-cache")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.liquibase:liquibase-core")
-    implementation("org.springframework.retry:spring-retry")
-    implementation("org.apache.commons:commons-lang3:3.0")
-    implementation("io.springfox:springfox-swagger2:2.9.2")
-    implementation("io.springfox:springfox-swagger-ui:2.9.2")
+    implementation("com.github.tomakehurst:wiremock-jre8:2.23.2")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
@@ -85,12 +51,9 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("com.ninja-squad:springmockk:1.1.2")
-    testImplementation("io.projectreactor:reactor-test")
     testImplementation("com.h2database:h2:1.4.199")
 
     kapt("org.springframework.boot:spring-boot-configuration-processor")
-
-    liquibase(project.sourceSets.getByName("main").runtimeClasspath)
 
     ktlint("com.github.shyiko:ktlint:0.31.0")
 }
